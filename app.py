@@ -1,13 +1,13 @@
 from helper_functions import read_clock, convert_time, calculate_time, progression
 import sys
 
+# Description: Main Game -> Progressive Mode
+# Parameters: NIL
 def progressive():
     # Setting up progress trackers
-    read_prog = progression.Progress("Reading the Clock", 4, 6)
-    convert_prog = progression.Progress("Converting Time", 6, 10)
-    calc_prog = progression.Progress("Calculating Time", 6, 10)
-
-    read_prog.progress_report()
+    read_prog = progression.Progress("Reading the Clock", 1, 1) #4, 6
+    convert_prog = progression.Progress("Converting Time", 1, 1) #6, 10
+    calc_prog = progression.Progress("Calculating Time", 1, 1) #6,10
 
     # For now, each level runs until they are proficient in the area 
     # TODO: Change this to run questions till self.total defined in class Progression
@@ -22,9 +22,13 @@ def progressive():
 
     while not calc_prog.check_proficiency():
         # Mode 3 : insert YongQing's part here
-        calculate_time.question(calc_prog)    
+        calculate_time.question(calc_prog)   
 
-    if read_prog.check_proficiency() and convert_prog.check_proficiency() and calc_prog.check_proficiency():
+    # Troubleshooting -> run this to check output
+    # print(read_prog.check_proficiency())
+    # print(calc_prog.check_proficiency()) 
+
+    if read_prog.check_proficiency() and calc_prog.check_proficiency(): # and convert_prog.check_proficiency()
         # Is there a more efficient way to do this lol
         read_prog.progress_report()
         # convert_prog.progress_report()
@@ -38,6 +42,8 @@ def progressive():
         calc_prog.progress_report()
         main_app()
 
+# Description: Practice Mode
+# Parameters: NIL
 def practice():
     level_choice = input ("""
     Choose a Level to Practise:
@@ -74,16 +80,35 @@ def practice():
     # Return to main menu
     main_app()
 
-def quit():
-    print("Goodbye!")
-    sys.exit()
-
-# Start from here
+#TODO: Change main menu to reflect unlocked story mode and read user input accordingly
+# Description: Main Menu
+# Parameters: NIL
 def main_app(unlock_story = False):
-    valid_modes = ["Progressive", "1", "Main", "Practice", "2", "Quit", "3"]
+    valid_modes_nostory = ["Start Game", "1", "Main", "Practice", "2", "Quit", "3"]
 
+    valid_modes_story = ["Start Game", "1", "Main", "Practice", "2", "Story", "3", "Quit", "4"]
+    
     # Welcome Screen    
-    print("""
+    if unlock_story:
+        print("""
+
+    ______  ______   __       __           ______  __   __    __   ______        ______  ______       __    __   ______    
+   /\__  _\/\  ___\ /\ \     /\ \         /\__  _\/\ \ /\ "-./  \ /\  ___\      /\__  _\/\  __ \     /\ "-./  \ /\  ___\   
+    \/_/\ \/\ \  __\ \ \ \____\ \ \____    \/_/\ \/\ \ \\ \ \-./\ \\ \  __\     \/_/\ \/\ \ \/\ \    \ \ \-./\ \\ \  __\   
+       \ \_\ \ \_____\\ \_____\\ \_____\      \ \_\ \ \_\\ \_\ \ \_\\ \_____\      \ \_\ \ \_____\    \ \_\ \ \_\\ \_____\ 
+        \/_/  \/_____/ \/_____/ \/_____/       \/_/  \/_/ \/_/  \/_/ \/_____/       \/_/  \/_____/     \/_/  \/_/ \/_____/ 
+                                                                                                                       
+    ------------------------------------------------------------------------------------------------------------------------
+
+    1 ) Start Game
+    2 ) Practice
+    3 ) Story Mode
+    4 ) Quit 
+
+    \n""")
+
+    else:
+        print("""
 
     ______  ______   __       __           ______  __   __    __   ______        ______  ______       __    __   ______    
    /\__  _\/\  ___\ /\ \     /\ \         /\__  _\/\ \ /\ "-./  \ /\  ___\      /\__  _\/\  __ \     /\ "-./  \ /\  ___\   
@@ -101,7 +126,7 @@ def main_app(unlock_story = False):
 
     mode_choice = input()
 
-    while mode_choice not in valid_modes:
+    while mode_choice not in valid_modes_nostory:
         mode_choice = input ("""
 
     Choose a Mode:
@@ -118,6 +143,7 @@ def main_app(unlock_story = False):
     elif mode_choice == "2" or mode_choice == "Practice":
         practice()
     elif mode_choice == "3" or mode_choice == "Quit":
+        print("Goodbye!")
         quit()
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+# TODO Description: Progression class
 class Progress:
 
     def __init__(self, level, threshold, total):
@@ -13,7 +14,7 @@ class Progress:
         self.pts += n
     
     def check_proficiency(self):
-        if self.pts > self.threshold:
+        if self.pts >= self.threshold:
             return True
         else:
             return False

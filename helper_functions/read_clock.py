@@ -33,6 +33,8 @@ dict_face = dict(zip(faces, times)) # zip to create dict with faces as keys and 
 import random
 
 # TODO: Ask if we should prompt if user accidentally pressed enter
+# TODO Description: Picks random preset question
+# Parameters: progress_tracker (Progression class)
 def question(progress_tracker = None):
     face, time = random.choice(list(dict_face.items()))
     

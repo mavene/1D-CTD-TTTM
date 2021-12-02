@@ -1,5 +1,7 @@
 import random
 
+# TODO Description: Corrects time?
+# Parameters: start_minutes (str), start_hours (str), minutes (str), hours (str)
 def time_correction(start_minutes, start_hours, minutes, hours):
     mins = int(minutes) + int(start_minutes)
     hrs = int(hours) + int(start_hours)
@@ -16,6 +18,8 @@ def time_correction(start_minutes, start_hours, minutes, hours):
         hrs = "0" + str(hrs)
     return str(mins), str(hrs), str(days)
 
+# TODO Description: Checks time error?
+# Parameters: minutes (str), hours (str), start_hour (str), start_minutes (str)
 def time_error(minutes, hours, start_hour, start_minutes):
     if minutes == "":
         minutes += "0"
@@ -34,6 +38,8 @@ def time_error(minutes, hours, start_hour, start_minutes):
     
     return None
 
+# TODO Description: Checks day error?
+# Parameters: day (str)
 def day_error(day):
     if day == "":
         return day
@@ -42,6 +48,8 @@ def day_error(day):
         return "Wrong spelling"
     return day.lower()
     
+# TODO Description: Corrects day
+# Parameters: day (str), days (str)
 def day_correction(day, days):
     dict_day = {"monday": 1, "tuesday": 2, "wednesday": 3, "thursday": 4, "friday": 5, "saturday": 6, "sunday":7}
     counter = dict_day[day] + int(days)
@@ -50,7 +58,9 @@ def day_correction(day, days):
     for i in dict_day.keys():
         if dict_day[i] == counter:
             return i[0].upper() + i[1:]
-    
+
+# TODO Description: Calculates correct answer?
+# Parameters: start_hours (str), start_minutes (str), hours (str), minutes (str), day (str)
 def calc(start_hours, start_minutes, hours, minutes, day = ""):
     error_T = time_error(minutes, hours, start_hours, start_minutes)
     if error_T != None:
@@ -68,6 +78,8 @@ def calc(start_hours, start_minutes, hours, minutes, day = ""):
     current_day = day_correction(error_D, days)
     return hours, minutes, current_day
 
+# TODO Description: Generates random question
+# Parameters: progress_tracker (Progression class)
 def question(progress_tracker = None):
     current_hrs, interval_hr = random.sample([f"{i:02d}" for i in range(1, 13)], 2)
     current_mns, interval_mn = random.sample([f"{i:02d}" for i in range(0, 60, 5)], 2)

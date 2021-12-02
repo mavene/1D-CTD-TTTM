@@ -4,6 +4,8 @@
 from time import sleep
 import calculate_time, convert_time, read_clock, progression
 
+# TODO Description: Complete and integrate into main app
+# Parameters: NIL (for now)
 def start():
     story_prog = progression.Progress("story")
 
