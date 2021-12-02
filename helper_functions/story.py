@@ -1,13 +1,6 @@
-#TODO:
+#TODO: Score system using Progression class -> just tell correct answer and keep track of areas they can improve on and activate practice mode
+# if score < 5, retry mini games?
 
-# Modularise their code and only retrieve the correct question to suit the story
-# read_clock()
-
-# Score system -> just tell correct answer and keep track of areas they can improve on and activate practice mode
-
-#--------------------------------------------------------------------------
-#Story mode
-#add some score system if score < 5, retry mini games?
 from time import sleep
 import calculate_time, convert_time, read_clock, progression
 
@@ -24,7 +17,6 @@ def start():
 
     print("""Good morning {}! You just woke up and looked at the clock. 
             What time is it now?""".format(name))
-
     #Aravind's function
 
     print("""You have 40 minutes to get ready before your school bus arrives

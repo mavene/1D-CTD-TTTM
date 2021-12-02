@@ -63,19 +63,19 @@ def calc(start_hours, start_minutes, hours, minutes, day = ""):
     minutes, hours, days = time_correction(start_minutes, start_hours, minutes, hours)
 
     if error_D == "":
-        return hours, minutes # f"{minutes} {hours} {days}"
+        return hours, minutes
     
     current_day = day_correction(error_D, days)
     return hours, minutes, current_day
 
-def question(): #progress_tracker wll be added after unit testing
+def question(progress_tracker = None):
     current_hrs, interval_hr = random.sample([f"{i:02d}" for i in range(1, 13)], 2)
     current_mns, interval_mn = random.sample([f"{i:02d}" for i in range(0, 60, 5)], 2)
     current_day = random.choice(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ""])
 
     # Troubleshooting -> run this to check logic
-    print(current_hrs, current_mns, current_day)
-    print(interval_hr, interval_mn)
+    # print(current_hrs, current_mns, current_day)
+    # print(interval_hr, interval_mn)
 
     question = f"""
     The time and date now is {current_hrs}:{current_mns}, {current_day}. 
@@ -86,23 +86,25 @@ def question(): #progress_tracker wll be added after unit testing
     correct_day = "".join(_)
 
     # Troubleshooting -> run this to check logic
-    print(correct_hr, correct_mn, correct_day)
+    # print(correct_hr, correct_mn, correct_day)
 
     user_input = input(question)
+    while user_input == "":
+        user_input = input(question)
+    
     given_time, *_ = user_input.split()
     given_day = "".join(_)
     given_hr, given_mn = given_time.split(":")
 
     # Troubleshooting -> run this to check logic
-    print(given_hr, given_mn, given_day)
+    # print(given_hr, given_mn, given_day)
 
-    while given_hr != correct_hr or given_mn != correct_mn or given_day != correct_day:
-        given_time, *_ = input("\n    Please review your answer again: ").split()
-        given_day = "".join(_)
-        given_hr, given_mn = given_time.split(":")
-        print(given_mn, given_hr, given_day)
+    if given_hr != correct_hr or given_mn != correct_mn or given_day != correct_day:
+        print("\nIncorrect answer")
+    else:
+        print("\nCorrect!")
+        if progress_tracker:
+            progress_tracker.add_pt(1)
 
-    print("\nCorrect!")
-    # progress_tracker.add_pt(1) -> will be added later after unit test
-
-question()
+# Troubleshooting -> run this to check logic
+#question()

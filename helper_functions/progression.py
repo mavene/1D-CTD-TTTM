@@ -18,5 +18,6 @@ class Progress:
         else:
             return False
 
+    # Can I make this look nicer?....
     def progress_report(self):
         return f"You scored {self.pts}/{self.total} in this {self.level} level!"
