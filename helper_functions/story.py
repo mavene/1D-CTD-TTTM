@@ -1,13 +1,14 @@
-#TODO: Score system using Progression class -> just tell correct answer and keep track of areas they can improve on and activate practice mode
+# TODO: Score system using Progression class -> just tell correct answer and keep track of areas they can improve on and activate practice mode
 # if score < 5, retry mini games?
 
 from time import sleep
-import calculate_time, convert_time, read_clock, progression
+from helper_functions import progression
 
-# TODO Description: Complete and integrate into main app
-# Parameters: NIL (for now)
-def start():
-    story_prog = progression.Progress("story")
+# TODO Complete and integrate into main app
+# TODO Description
+# Parameters: progress_tracker
+def start(progress_tracker = None):
+    story_prog = progression.Progress("Reading the Clock", 5, 9) #TODO: Proficiency by each level?
 
     name = input("Hello there, we are here to teach time. What is your name? ")
 

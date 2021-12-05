@@ -1,83 +1,159 @@
-import random
+# TODO: Add in more input validation
 
 # Description: Convert seconds to minutes
-# Parameters: seconds (str)
+# Parameters: minutes (int)
 def seconds_to_minutes(seconds):
-    minutes = int(seconds) // 60
+    minutes = seconds // 60
     remaining_seconds = seconds % 60
-    print("""60 seconds is equal to 1 minute. Divide the number of seconds by 60 to get the number of minutes. 
-             Any remainder value is the remaining seconds.""")
-    return ("{} seconds is {} minutes and {} seconds.".format(seconds, minutes, remaining_seconds))
+    return minutes, remaining_seconds
 
 # Description: Convert minutes to seconds
-# Parameters: minutes (str)
+# Parameters: minutes (int)
 def minutes_to_seconds(minutes):
-    seconds = int(minutes*60)
-    print("1 minute is equal to  60 seconds. Multiply the number of minutes by 60 to get the number of seconds.")
-    return ("{} minutes is {} seconds.".format(minutes,seconds))
+    seconds = minutes * 60
+    return seconds
 
 # Description: Convert minutes to hours
-# Parameters: minutes (str)
+# Parameters: minutes (int)
 def minutes_to_hours(minutes):
-    hours = int(minutes) // 60
-    print("""60 minutes is equal to 1 hour. Divide the number of minutes by 60 to get the number of hours.""")
-    return ("{} minutes is {} hours.".format(minutes,hours))
+    hours = minutes // 60
+    return hours
 
 # Description: Convert hours to minutes
-# Parameters: hours (str)
+# Parameters: hours (int)
 def hours_to_minutes(hours):
-    minutes = int(hours*60)
-    print("1 hour is equal to  60 minutess. Multiply the number of hours by 60 to get the number of minutes.")
-    return ("{} hours is {} minutes.".format(hours,minutes))
+    minutes = hours * 60
+    return minutes
 
 # Description: Convert hours to days
-# Parameters: hours (str)
+# Parameters: hours (int)
 def hours_to_days(hours):
-    days = int(hours) // 24
-    print("""24 hours is equal to 1 day. Divide the number of hours by 24 to get the number of days.""")
-    return ("{} hours is {} days.".format(hours,days))
+    days = hours // 24
+    return days
 
 # Description: Convert months to years
 # Parameters: months (str)
 def months_to_years(months):
-    years = int(months) // 12
-    print("""There are 12 months in 1 year. Divide the number of months by 12 to get the number of years.""")
-    return ("{} months is {} years.".format(months,years))
+    years = str(int(months) // 12)
+    return years
 
-# TODO: Complete and integrate into main app with progress tracker
-# Description: Generates random question
-#  TODO Parameters: progress_tracker (Progression class)
-def question(): #progress_tracker wll be added after unit testing
-    conversions = {"seconds": "minutes", "minutes": ["seconds", "hours"], 
-                 "hours": ["minutes", "days"], "months": "years"}
+# Description: Convert months to years
+# Parameters: months (str)
+def check_input(user_input):
+    while True:
+        try:
+            return int(user_input)
+        except TypeError and ValueError:
+            print("Please only enter numbers!")
+            user_input = input()
+
+import random
+# Description: Convert months to years
+# Parameters: months (str)
+def question(progress_tracker = None, story_mode = False, qn = None):
+    if not qn:
+        qn_no = random.randint(0, 6)
+    else:
+        qn_no = qn
+
+    msg = ''
     
-    start, end = random.choice(list(conversions.items()))
-    if type(end) == list:
-        end = random.choice(end)
-    
-    # Troubleshooting -> run this to check logic
-    print(start, end)
+    if qn_no == 0:
+        if story_mode:
+            random_seconds = (random.randint(100, 200)//5) * 5  #multiples of 5 only (to be approachable to children)
+            msg = f'You play hide and seek with your friend. They start counting from {random_seconds}. How many minutes and seconds do you have?'
+        else:
+            random_seconds = (random.randint(0, 600)//5) * 5  #multiples of 5 only (to be approachable to children)
+            msg = f'Convert {random_seconds} seconds to minutes and seconds.\nHint: 1 minute = 60 seconds.\nDivide the number of seconds by 60 to get the number of minutes.\nAny remainder value is the remaining seconds.'
+        ans = input(msg)
+        minutes, seconds = seconds_to_minutes(random_seconds)
+        ans_min, ans_sec = ans.split()
+        given_minutes = check_input(ans_min)
+        given_seconds = check_input(ans_sec)
 
-    value = random.randint(1, 60)
+        if given_minutes == minutes and given_seconds == seconds:
+            print("Correct!")
+            if progress_tracker:
+                progress_tracker.add_pt(1)
+        else:
+            print("Oops, not quite right.")
 
-    if start == "seconds":
-        if end == "minutes":
-            seconds_to_minutes(value)
+    elif qn_no == 1:
+        random_minutes = random.randint(0, 61)
+        ans = input(f'Convert {random_minutes} minutes to seconds.\nHint: 1 minute = 60 seconds.\nMultiply the number of minutes by 60 to get the number of seconds.')
+        seconds = minutes_to_seconds(random_minutes)
+        given_seconds = check_input(ans)
 
-    elif start == "minutes":
-        if end == "seconds":
-            minutes_to_seconds(value)
-        elif end == "hours":
-            minutes_to_hours(value)
+        if given_seconds == seconds:
+            print("Correct!")
+            if progress_tracker:
+                progress_tracker.add_pt(1)
+        else:
+            print("Oops, not quite right.")
+        
+    elif qn_no == 2:
+        random_minutes = (random.randint(45, 121)//5) * 5   #multiples of 5 only (to be approachable to children)
+        if story_mode: 
+            msg = f'Your first class today is science! Your teacher lets you watch a {random_minutes} minutes movie about plants. How many hours and minutes is that?'
+        else:
+            msg = f'Convert {random_minutes} minutes to hours.\n1 hour = 60 minutes.\nDivide the number of minutes by 60 to get the number of hours.'
+        ans = input(msg)
+        hours = minutes_to_hours(random_minutes)
+        given_hours = check_input(ans)
 
-    elif start == "hours":
-        if end == "minutes":
-            hours_to_minutes(value)
-        elif end == "days":
-            hours_to_days(value)
+        if given_hours == hours:
+            print("Correct!")
+            if progress_tracker:
+                progress_tracker.add_pt(1)
+        else:
+            print("Oops, not quite right.")
+        
+    elif qn_no == 3:
+        random_hours = random.randint(1, 13)
+        ans = input(f'Convert {random_hours} hours to minutes.\n1 hour = 60 minutes.\nMultiply the number of hours by 60 to get the number of minutes.')
+        minutes = hours_to_minutes(random_hours)
+        given_minutes = check_input(ans)
 
-    elif start == "months":
-        months_to_years(value)
+        if given_minutes == minutes:
+            print("Correct!")
+            if progress_tracker:
+                progress_tracker.add_pt(1)
+        else:
+            print("Oops, not quite right.")
+        
+    elif qn_no == 4:
+        if story_mode:
+            random_hours = 72
+            msg = 'Your friend says you can survive without food for 72 hours. How many days is that?'
+        else:
+            random_hours = (random.randint(24, 481)// 24) * 24  
+            msg = f'Convert {random_hours} hours to days.\n1 day = 24 hours.\nDivide the number of hours by 24 to get the number of days.'
+        
+        ans = input(msg)
+        days = hours_to_days(random_hours)
+        given_days = check_input(ans)
 
-# Troubleshooting -> run this to check logic
+        if given_days == days:
+            print("Correct!")
+            if progress_tracker:
+                progress_tracker.add_pt(1)
+        else:
+            print("Oops, not quite right.")
+        
+    else:
+        random_months = (random.randint(12, 120)//12) * 12
+        ans = input(f'Convert {random_months} months to years.\n1 year = 12 months.\nDivide the number of months by 12 to get the number of years.')
+        years = months_to_years(random_months)
+        given_years = check_input(ans)
+
+        if given_years == years:
+            print("Correct!")
+            if progress_tracker:
+                progress_tracker.add_pt(1)
+        else:
+            print("Oops, not quite right.")
+
+# Unit Testing
+# -------------------------------------------
 # question()
+# question(None, True, 0)

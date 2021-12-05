@@ -78,12 +78,12 @@ def calc(start_hours, start_minutes, hours, minutes, day = ""):
     current_day = day_correction(error_D, days)
     return hours, minutes, current_day
 
-# TODO Description: Generates random question
+# Description: Generates random question
 # Parameters: progress_tracker (Progression class)
 def question(progress_tracker = None):
     current_hrs, interval_hr = random.sample([f"{i:02d}" for i in range(1, 13)], 2)
     current_mns, interval_mn = random.sample([f"{i:02d}" for i in range(0, 60, 5)], 2)
-    current_day = random.choice(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", ""])
+    current_day = random.choice(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
 
     # Troubleshooting -> run this to check logic
     # print(current_hrs, current_mns, current_day)
@@ -118,5 +118,6 @@ def question(progress_tracker = None):
         if progress_tracker:
             progress_tracker.add_pt(1)
 
-# Troubleshooting -> run this to check logic
-#question()
+# Unit Testing
+# -------------------------------------------
+# question()
