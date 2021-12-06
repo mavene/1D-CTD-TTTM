@@ -1,6 +1,7 @@
 from os import _exit
 from time import sleep
 from helper_functions import read_time, convert_time, calculate_time, story, progression
+import sys
 
 # Description: Main Game -> Progressive Mode
 # Parameters: N/A
@@ -138,11 +139,11 @@ def welcome_screen(unlock_story = False):
     if unlock_story:
         print("""\n
 
-    ______  ______   __       __           ______  __   __    __   ______        ______  ______       __    __   ______    
-   /\__  _\/\  ___\ /\ \     /\ \         /\__  _\/\ \ /\ "-./  \ /\  ___\      /\__  _\/\  __ \     /\ "-./  \ /\  ___\   
-    \/_/\ \/\ \  __\ \ \ \____\ \ \____    \/_/\ \/\ \ \\ \ \-./\ \\ \  __\     \/_/\ \/\ \ \/\ \    \ \ \-./\ \\ \  __\   
-       \ \_\ \ \_____\\ \_____\\ \_____\      \ \_\ \ \_\\ \_\ \ \_\\ \_____\      \ \_\ \ \_____\    \ \_\ \ \_\\ \_____\ 
-        \/_/  \/_____/ \/_____/ \/_____/       \/_/  \/_/ \/_/  \/_/ \/_____/       \/_/  \/_____/     \/_/  \/_/ \/_____/ 
+    ______  ______   __       __           ______  __   __    __   ______      ______  ______       __    __   ______    
+   /\__  _\/\  ___\ /\ \     /\ \         /\__  _\/\ \ /\ "-./  \ /\  ___\    /\__  _\/\  __ \     /\ "-./  \ /\  ___\   
+   \/_/\ \/\ \  __\ \ \ \____\ \ \____    \/_/\ \/\ \ \\ \ \-./\ \\ \  __ \   \/_/\ \/\ \ \/\ \    \ \ \-./\ \\ \  __ \   
+       \ \_\\ \_____\\ \_____\\ \_____\      \ \_\ \ \_\\ \_\ \ \_\\ \_____\     \ \_\ \ \_____\    \ \_\ \ \_\\ \_____\ 
+        \/_/ \/_____/ \/_____/ \/_____/       \/_/  \/_/ \/_/  \/_/ \/_____/      \/_/  \/_____/     \/_/  \/_/ \/_____/ 
                                                                                                                        
     ------------------------------------------------------------------------------------------------------------------------
 
@@ -194,7 +195,7 @@ def welcome_screen(unlock_story = False):
             story.start()
         elif mode_choice == "4" or mode_choice == "Quit":
             print("Goodbye!")
-            quit()
+            sys.exit()
 
     else:
         while mode_choice not in valid_modes_nostory:
@@ -215,7 +216,7 @@ def welcome_screen(unlock_story = False):
             practice()
         elif mode_choice == "3" or mode_choice == "Quit":
             print("Goodbye!")
-            quit()
+            sys.exit()
 
 if __name__ == "__main__":
     welcome_screen()
