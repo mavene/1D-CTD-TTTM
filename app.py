@@ -1,37 +1,59 @@
-from os import read
-from helper_functions import read_time, convert_time, calculate_time, progression, story
-import sys
+from os import _exit
+from time import sleep
+from helper_functions import read_time, convert_time, calculate_time, story, progression
 
 # Description: Main Game -> Progressive Mode
 # Parameters: N/A
 def progressive():
     # Setting up progress trackers
-    read_prog = progression.Progress("Reading the Clock", 1, 1) #4, 6
-    convert_prog = progression.Progress("Converting Time", 1, 1) #6, 10
-    calc_prog = progression.Progress("Calculating Time", 1, 1) #6,10
+    level1_title = "Reading the Clock"
+    level2_title = "Converting Time"
+    level3_title = "Calculating Time"
+    read_prog = progression.Progress(level1_title, 3, 5) #4, 6
+    convert_prog = progression.Progress(level2_title, 3, 5) #6, 10
+    calc_prog = progression.Progress(level3_title, 3, 5) #6,10
+
+    print(f"""
+#####################################
+Starting Level 1: 
+{level1_title}
+#####################################
+    """)
 
     for i in range(read_prog.get_total_qns()):
         # Mode 1 : insert Aravind's part here
         read_time.question(read_prog)
-    
+        sleep(0.5)
     print(read_prog.progress_report())
+    sleep(0.5)
+
+    print(f"""
+#####################################
+Starting Level 2: 
+{level2_title}
+#####################################
+    """)
 
     for i in range(convert_prog.get_total_qns()):
         # Mode 2 : insert Vanessa's part here
         convert_time.question(convert_prog)
-
+        sleep(0.5)
     print(convert_prog.progress_report())
+    sleep(0.5)
+
+    print(f"""
+#####################################
+Starting Level 3: 
+{level3_title}
+#####################################
+    """)
 
     for i in range(calc_prog.get_total_qns()):
         # Mode 3 : insert YongQing's part here
-        calculate_time.question(calc_prog)   
-    
+        calculate_time.qn_generator(calc_prog)   
+        sleep(0.5)
     print(calc_prog.progress_report())
-
-    # Troubleshooting -> run this to check output
-    # print(read_prog.check_proficiency())
-    # print(convert_prog.check_proficiency())
-    # print(calc_prog.check_proficiency()) 
+    sleep(0.5)
 
     if read_prog.check_proficiency() and calc_prog.check_proficiency() and convert_prog.check_proficiency():
         print("\nYou have unlocked Story Mode!")
@@ -43,9 +65,12 @@ def progressive():
 # Parameters: N/A
 def practice():
     # Setting up progress trackers
-    read_prog = progression.Progress("Reading the Clock", 1, 1) #4, 6
-    convert_prog = progression.Progress("Converting Time", 1, 1) #6, 10
-    calc_prog = progression.Progress("Calculating Time", 1, 1) #6,10
+    level1_title = "Reading Time"
+    level2_title = "Converting Time"
+    level3_title = "Calculating Time"
+    read_prog = progression.Progress(level1_title, 3, 6) #3, 5
+    convert_prog = progression.Progress(level2_title, 3, 5) #3, 5
+    calc_prog = progression.Progress(level3_title, 3, 5) #3, 5
 
     level_choice = input ("""
     Choose a Level to Practise:
@@ -69,16 +94,34 @@ def practice():
     \n""")
 
     if level_choice in ["1", "Read Time"]:
-        for i in range(0, 10):
-            read_time.question()
+        print(f"""
+-------------------------------------
+Practicing Level 1 : {level1_title}
+-------------------------------------
+        """)
+        for i in range(0, read_prog.get_total_qns()):
+            read_time.question(read_prog)
+            sleep(0.5)
         print(read_prog.progress_report())
     elif level_choice in ["2", "Convert Time"]:
-        for i in range(0, 10):
-            convert_time.question()
-        print(convert_prog.progress_report())
+        print(f"""
+-------------------------------------
+Practicing Level 2: {level2_title}
+-------------------------------------
+        """)
+        for i in range(0, convert_prog.get_total_qns()):
+            convert_time.question(convert_prog)
+            sleep(0.5)
+        print(convert_prog.progress_report(convert_prog))
     elif level_choice in ["3", "Calculate Time"]:
-        for i in range(0, 10):
-            calculate_time.question()
+        print(f"""
+-------------------------------------
+Practicing Level 3: {level3_title}
+-------------------------------------
+        """)
+        for i in range(0, convert_prog.get_total_qns()):
+            calculate_time.qn_generator(calc_prog)
+            sleep(0.5)
         print(calc_prog.progress_report())
         
     # Return to main menu
@@ -93,7 +136,7 @@ def welcome_screen(unlock_story = False):
     
     # Welcome Screen    
     if unlock_story:
-        print("""
+        print("""\n
 
     ______  ______   __       __           ______  __   __    __   ______        ______  ______       __    __   ______    
    /\__  _\/\  ___\ /\ \     /\ \         /\__  _\/\ \ /\ "-./  \ /\  ___\      /\__  _\/\  __ \     /\ "-./  \ /\  ___\   
@@ -111,7 +154,7 @@ def welcome_screen(unlock_story = False):
     \n""")
 
     else:
-        print("""
+        print("""\n
 
     ______  ______   __       __           ______  __   __    __   ______        ______  ______       __    __   ______    
    /\__  _\/\  ___\ /\ \     /\ \         /\__  _\/\ \ /\ "-./  \ /\  ___\      /\__  _\/\  __ \     /\ "-./  \ /\  ___\   

@@ -5,7 +5,7 @@ import random
 
 # Read clock faces for progressive
 dirname = os.path.dirname(__file__)
-path = rf'{dirname}\\..\resources'
+path = rf'{dirname}\\..\resources\clocks'
 
 times = []
 faces = []
@@ -83,7 +83,7 @@ def question(progress_tracker = None):
 # Read clock faces for story
 morning_dict = {}
 noon_dict = {}
-evening_dict = {}
+afternoon_dict = {}
 night_dict = {}
 
 for face, time in dict_face.items():
@@ -91,18 +91,17 @@ for face, time in dict_face.items():
     if time.startswith('6'):
         morning_dict[face] = time
         
-    elif time.startswith('12') or time.startswith('1') or time.startswith('2'):
+    elif time.startswith('10') or time.startswith('11'):
         noon_dict[face] = time
         
-    elif time.startswith('5') or time.startswith('6'):
-        evening_dict[face] = time
+    elif time.startswith('2') or time.startswith('3'):
+        afternoon_dict[face] = time
         
     elif time.startswith('9') or time.startswith('10'):
         night_dict[face] = time
         
     elif time.startswith('7'):
         morning_dict[face] = time
-        evening_dict[face] = time
         
     elif time.startswith('8'):
         morning_dict[face] = time
@@ -110,13 +109,13 @@ for face, time in dict_face.items():
         
     else: pass
 
-morn2nitetimes = [morning_dict, noon_dict, evening_dict, night_dict]
+morn2nitetimes = [morning_dict, noon_dict, afternoon_dict, night_dict]
 
 def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracker = None, qn_num = 0, player = 'Timmy'):
     # set twelve_hour_or_twenty_four_hour = 'twenty-four hour'  for correct answer to be set in the twenty-four hour format
     
-    ls = ['Morning', 'Noon', 'Evening', 'Night']
-    # Morning := 6 - 8+ am, Noon := 12 - 2+ pm, Evening := 5 - 7+ pm, Night := 8 - 10+ pm
+    ls = ['Morning', 'Noon', 'Afternoon', 'Night']
+    # Morning := 6 - 8+ am, Noon := 10 - 11+ am, Aternoon := 2 - 3 pm, Night := 8 - 10+ pm
     idx = ls.index(time_of_day)
     face, time = random.choice(list(morn2nitetimes[idx].items()))
     
@@ -124,20 +123,19 @@ def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracke
     tfr_hr_pm = str(int(hr)+12) + ':' + mn
     tfr_hr_am = hr.rjust(2, '0') + ':' + mn
     
-    if time_of_day == 'Morning' and twelve_hour_or_twenty_four_hour == '12 hour':
+    if (time_of_day == 'Morning' or time_of_day == 'Noon') and twelve_hour_or_twenty_four_hour == '12 hour':
         answer_key = time+' AM'
         
-    elif time_of_day == 'Morning' and twelve_hour_or_twenty_four_hour == '24 hour':
+    elif (time_of_day == 'Morning' or time_of_day == 'Noon') and twelve_hour_or_twenty_four_hour == '24 hour':
         answer_key = tfr_hr_am
         
-    elif (time_of_day == 'Noon' or time_of_day == 'Evening' or time_of_day == 'Night') and twelve_hour_or_twenty_four_hour == '12 hour':
+    elif (time_of_day == 'Afternoon' or time_of_day == 'Night') and twelve_hour_or_twenty_four_hour == '12 hour':
         answer_key = time+' PM'
         
-    elif (time_of_day == 'Noon' or time_of_day == 'Evening' or time_of_day == 'Night') and twelve_hour_or_twenty_four_hour == '24 hour':
+    elif (time_of_day == 'Afternoon' or time_of_day == 'Night') and twelve_hour_or_twenty_four_hour == '24 hour':
         answer_key = tfr_hr_pm
     else:
         return "Invalid input"
-    print(answer_key)
     
     img = mpimg.imread(path+"\\"+face)
     plt.imshow(img)
@@ -157,6 +155,8 @@ def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracke
         #ans = ans.replace(' ', '') # <1> uncomment if spaces in between digits are to be accepted
         if ans == answer_key:
             print('\nGood job! That is the correct time.')
+            if progress_tracker:
+                progress_tracker.add_pt(1)
             
         elif twelve_hour_or_twenty_four_hour == '24 hour':
             hr, mn = ans.split(':')
@@ -164,7 +164,8 @@ def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracke
             
             if hr+':'+mn == answer_key:
                 print('\nThat is the correct time! Try to follow the format given next time.')
-                
+                if progress_tracker:
+                    progress_tracker.add_pt(0.5)
             else:
                 print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
 
@@ -178,13 +179,16 @@ def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracke
                 
             if hr.strip()+':'+mn+' '+ap == answer_key: # delete .strip() if <1>
                 print('\nThat is the correct time! Learn to present your answer better by following the given format.')
-                    
+                if progress_tracker:
+                    progress_tracker.add_pt(0.5)     
             else:
                 print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
     except:
         print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+    
+    return answer_key
 
 # Unit Testing
 # -------------------------------------------
-# read_the_time()
-# read_clock_story_mode("Morning", "12 hour")
+# question()
+# story_question("Morning", "24 hour", None, 0)

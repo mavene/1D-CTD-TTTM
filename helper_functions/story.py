@@ -1,37 +1,79 @@
-# TODO: Score system using Progression class -> just tell correct answer and keep track of areas they can improve on and activate practice mode
-# if score < 5, retry mini games?
-
+import os
 from time import sleep
-from helper_functions import progression
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from app import welcome_screen
+from helper_functions import read_time, convert_time, calculate_time, progression
 
-# TODO Complete and integrate into main app
-# TODO Description
-# Parameters: progress_tracker
+dirname = os.path.dirname(__file__)
+path = rf'{dirname}\\..\resources\storymode'
+
+def display_graphic(qn):
+    img = mpimg.imread(path+"\\"+qn+".png")
+    plt.imshow(img)
+    plt.axis('off')
+    plt.show()
+
 def start(progress_tracker = None):
-    story_prog = progression.Progress("Reading the Clock", 5, 9) #TODO: Proficiency by each level?
-
+    story_prog = progression.Progress("Story Time", 5, 9)
     name = input("Hello there, we are here to teach time. What is your name? ")
+    
+    # Q1
+    # Display image for Q1
+    display_graphic("1")
+    sleep(0.5)
+    storygen_time1 = read_time.story_question("Morning", "24 hour", story_prog, 0, name)
+    sleep(0.5)
+    
+    # Q2
+    display_graphic("2")
+    sleep(0.5)
+    calculate_time.qn_generator(story_prog, True, 2, storygen_time1)
+    sleep(0.5)
 
+    # Q3
+    display_graphic("3")
+    sleep(0.5)
+    convert_time.question(story_prog, True, 3)
+    sleep(0.5)
+    
+    # Q4
+    display_graphic("4")
+    sleep(0.5)
+    storygen_time2 = read_time.story_question("Noon", "24 hour", story_prog, 1)
+    sleep(0.5)
+
+    # Q5
+    display_graphic("5")
+    sleep(0.5)
+    calculate_time.qn_generator(story_prog, True, 5, storygen_time2)
+    sleep(0.5)
+
+    # Q6
+    display_graphic("6")
+    sleep(0.5)
+    storygen_time3 = read_time.story_question("Afternoon", "24 hour", story_prog, 2)
+    sleep(0.5)
+
+    # Q7
+    display_graphic("7")
+    sleep(0.5)
+    calculate_time.qn_generator(story_prog, True, 7, storygen_time3)
+    sleep(0.5)
+
+    # Q8
+    display_graphic("8")
+    sleep(0.5)
+    convert_time.question(story_prog, True, 5)
+    sleep(0.5)
+    
+    # Q9
+    display_graphic("9")
+    sleep(0.5)
+    convert_time.question(story_prog, True, 1)
+    sleep(0.5)
+
+    print(story_prog.progress_report())
     sleep(1)
 
-    print("Using what you have learnt in the previous mini-games, we will now go through a day in your life!")
-
-    sleep(1)
-
-    print("""Good morning {}! You just woke up and looked at the clock. 
-            What time is it now?""".format(name))
-    #Aravind's function
-
-    print("""You have 40 minutes to get ready before your school bus arrives
-             What time will your bus reach?""")
-    #YQ's function
-
-    print("""Your first class today is science! Your teacher lets you
-             watch a 100 minutes movie about plants. How many hours and minutes is that?""")
-    #Vanessa's function
-
-    print("""The movie starts to get boring and you are hungry. What time is it now?""")
-    #Aravind's function
-
-    print("""Lunch is at 12pm. How long more do you need to wait?""")
-    #YQ's function
+    welcome_screen(True)

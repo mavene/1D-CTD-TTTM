@@ -35,4 +35,4 @@ class Progress:
         return f"""\n
         ＼(＾O＾)／
         You scored {self.pts}/{self.total} in the {self.level} level!
-        """
+        \n"""
