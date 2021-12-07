@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import random
 
+random.seed()
+
 # Read clock faces for progressive
 dirname = os.path.dirname(__file__)
 path = rf'{dirname}\\..\resources\clocks'
@@ -59,7 +61,7 @@ def question(progress_tracker = None):
                 if progress_tracker:
                     progress_tracker.add_pt(0.5)
             else:
-                print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+                print('\nIncorrect.!')
 
         else:
             hr, tail = ans.split(':')
@@ -74,9 +76,9 @@ def question(progress_tracker = None):
                 if progress_tracker:
                     progress_tracker.add_pt(0.5)
             else:
-                print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+                print('\nIncorrect.')
     except:
-        print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+        print('\nIncorrect.')
 
 #--------------------------------
 
@@ -167,7 +169,7 @@ def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracke
                 if progress_tracker:
                     progress_tracker.add_pt(0.5)
             else:
-                print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+                print('\nIncorrect.')
 
         else:
             hr, tail = ans.split(':') 
@@ -182,9 +184,9 @@ def story_question(time_of_day, twelve_hour_or_twenty_four_hour, progress_tracke
                 if progress_tracker:
                     progress_tracker.add_pt(0.5)     
             else:
-                print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+                print('\nIncorrect.')
     except:
-        print('\nIncorrect. Ensure your digits are not spaced out and learn how to read the clock!')
+        print('\nIncorrect.')
     
     return answer_key
 

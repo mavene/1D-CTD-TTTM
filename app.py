@@ -10,9 +10,9 @@ def progressive():
     level1_title = "Reading the Clock"
     level2_title = "Converting Time"
     level3_title = "Calculating Time"
-    read_prog = progression.Progress(level1_title, 3, 5) #4, 6
-    convert_prog = progression.Progress(level2_title, 3, 5) #6, 10
-    calc_prog = progression.Progress(level3_title, 3, 5) #6,10
+    read_prog = progression.Progress(level1_title, 2, 3) #4, 6
+    convert_prog = progression.Progress(level2_title, 2, 3) #6, 10
+    calc_prog = progression.Progress(level3_title, 2, 3) #6,10
 
     print(f"""
 #####################################
@@ -38,9 +38,9 @@ Starting Level 2:
     for i in range(convert_prog.get_total_qns()):
         # Mode 2 : insert Vanessa's part here
         convert_time.question(convert_prog)
-        sleep(0.5)
+        sleep(0.3)
     print(convert_prog.progress_report())
-    sleep(0.5)
+    sleep(0.3)
 
     print(f"""
 #####################################
@@ -52,9 +52,9 @@ Starting Level 3:
     for i in range(calc_prog.get_total_qns()):
         # Mode 3 : insert YongQing's part here
         calculate_time.qn_generator(calc_prog)   
-        sleep(0.5)
+        sleep(0.3)
     print(calc_prog.progress_report())
-    sleep(0.5)
+    sleep(0.3)
 
     if read_prog.check_proficiency() and calc_prog.check_proficiency() and convert_prog.check_proficiency():
         print("\nYou have unlocked Story Mode!")
@@ -69,9 +69,9 @@ def practice():
     level1_title = "Reading Time"
     level2_title = "Converting Time"
     level3_title = "Calculating Time"
-    read_prog = progression.Progress(level1_title, 3, 6) #3, 5
-    convert_prog = progression.Progress(level2_title, 3, 5) #3, 5
-    calc_prog = progression.Progress(level3_title, 3, 5) #3, 5
+    read_prog = progression.Progress(level1_title, 2, 3) #3, 5
+    convert_prog = progression.Progress(level2_title, 2, 3) #3, 5
+    calc_prog = progression.Progress(level3_title, 2, 3) #3, 5
 
     level_choice = input ("""
     Choose a Level to Practise:
@@ -102,7 +102,7 @@ Practicing Level 1 : {level1_title}
         """)
         for i in range(0, read_prog.get_total_qns()):
             read_time.question(read_prog)
-            sleep(0.5)
+            sleep(0.3)
         print(read_prog.progress_report())
     elif level_choice in ["2", "Convert Time"]:
         print(f"""
@@ -112,7 +112,7 @@ Practicing Level 2: {level2_title}
         """)
         for i in range(0, convert_prog.get_total_qns()):
             convert_time.question(convert_prog)
-            sleep(0.5)
+            sleep(0.3)
         print(convert_prog.progress_report(convert_prog))
     elif level_choice in ["3", "Calculate Time"]:
         print(f"""
@@ -122,7 +122,7 @@ Practicing Level 3: {level3_title}
         """)
         for i in range(0, convert_prog.get_total_qns()):
             calculate_time.qn_generator(calc_prog)
-            sleep(0.5)
+            sleep(0.3)
         print(calc_prog.progress_report())
         
     # Return to main menu

@@ -1,5 +1,5 @@
 import random
-
+random.seed()
 # TODO Description: Corrects time?
 # Parameters: start_minutes (str)
 def analyze_time_input(u_input = ""):
